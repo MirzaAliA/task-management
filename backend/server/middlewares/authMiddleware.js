@@ -1,7 +1,7 @@
-import { sendErrorResponse } from "../core/response";
+import { sendErrorResponse } from "../core/response.js";
 import jwt from "jsonwebtoken";
 
-const authMiddleware = (req, res) => {
+const authMiddleware = (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader?.split(" ")[1];
 

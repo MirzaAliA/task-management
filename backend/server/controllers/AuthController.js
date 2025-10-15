@@ -50,7 +50,7 @@ export const registerUser = async (req, res) => {
         sendOkResponse(res, Users, "Success Insert Data");
     }
     catch (err) {
-        sendErrorResponse(res, { message: err }, 500)
+        sendErrorResponse(res, err, 500)
     }
 }
 
@@ -90,6 +90,6 @@ export const loginUser = async (req, res) => {
         sendOkResponse(res, { token, name: findUser.name }, "Success Login");
     }
     catch (err) {
-        sendErrorResponse(res, { message: err }, 500)
+        sendErrorResponse(res, err, 500)
     }
 }
