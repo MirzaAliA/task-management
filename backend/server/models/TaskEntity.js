@@ -7,11 +7,11 @@ const Task = new EntitySchema({
         task_id: { primary: true, type: "int", generated: true },
         title: { type: "varchar" },
         description: { type: "varchar" },
-        status: { type: "varchar" },
+        status: { type: "enum", enum: ["To Do", "In Progress", "Done"], default: "To Do" },
         deadline: { type: "datetime"},
     },
     relations: {
-        user: {
+        user_id: {
             target: "User",
             type: "many-to-one",
             joinColumn: {
