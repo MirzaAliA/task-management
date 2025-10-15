@@ -1,11 +1,11 @@
 import { DataSource } from "typeorm";
-import User from "../models/UserEntity.js";
 import dotenv from "dotenv"
+import User from "../models/UserEntity.js";
 import Task from "../models/TaskEntity.js";
 
 dotenv.config()
 
-const AppDataSource = new DataSource({
+export const AppDataSource = new DataSource({
     type: process.env.DATABASE_TYPE,
     host: process.env.DATABASE_HOST,
     port: process.env.PORT_MySQL,
