@@ -1,0 +1,31 @@
+import { EntitySchema } from "typeorm";
+
+const Task = new EntitySchema({
+    name: "Task",
+    tableName: "tasks",
+    columns: {
+        task_id: { primary: true, type: "int", generated: true },
+        title: { type: "varchar" },
+        description: { type: "varchar" },
+        status: { type: "varchar" },
+        deadline: { type: "datetime"},
+    },
+    relations: {
+        user: {
+            target: "User",
+            type: "many-to-one",
+            joinColumn: {
+                name: "user_id",
+            },
+        },
+        created_by: {
+            target: "User",
+            type: "many-to-one",
+            joinColumn: {
+                name: "created_by",
+            },
+        }
+    }
+})
+
+export default Task;

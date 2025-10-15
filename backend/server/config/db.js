@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import User from "../models/UserEntity.js";
 import dotenv from "dotenv"
+import Task from "../models/TaskEntity.js";
 
 dotenv.config()
 
@@ -12,7 +13,7 @@ const AppDataSource = new DataSource({
     password: process.env.PASSWORD_MySQL,
     database: process.env.DB_NAME_MySQL,
     synchronize: true,
-    entities: [User]
+    entities: [User, Task]
 })
 
 export const connectDB = async () => {
