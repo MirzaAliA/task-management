@@ -85,7 +85,14 @@ export const loginUser = async (req, res) => {
         const token = jwt.sign({
             user_id: findUser.user_id.toString(),
             username: findUser.username
-        }, process.env.SECRET, { expiresIn: 60 * 60 * 24});
+        }, process.env.SECRET, { expiresIn: 60 * 60 * 24 });
+
+        res.cookie("token", token, {
+            httpOnly: true,  
+            secure: false,   
+            sameSite: "lax",  
+            maxAge: 24 * 60 * 60 * 1000 
+        });
 
         sendOkResponse(res, { token, name: findUser.name }, "Success Login");
     }

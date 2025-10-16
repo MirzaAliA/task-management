@@ -66,7 +66,7 @@ export const postTaskData = async (req, res) => {
         if (!status) {
             return sendErrorResponse(res, { message: "Please input a Status" }, 401)
         }
-        if (status !== "To Do" || "In Progress" || "Done") {
+        if (status !== "To Do" && status !== "In Progress" && status !== "Done") {
             return sendErrorResponse(res, { message: "Please input a Status either To Do/In Progress/Done" }, 401)
         }
         if (!deadline) {
