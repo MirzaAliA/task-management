@@ -6,6 +6,7 @@ export default function HomePage() {
             <div>Home</div>
             <Link to="/">Home</Link>
             <Link to="/login">Login</Link>
+            <Link to="/tasks/add">Add</Link>
             <Link to="/register">Register</Link>
         </>
     )

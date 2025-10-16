@@ -49,11 +49,13 @@ export default function TaskPage() {
 
     return Alldata.length == 0 ? (
         <div>
+            <Link to="/tasks/add">Add</Link>
             <div>Tidak ada task</div>
         </div>
     ) :
         (
             <div>
+                <Link to="/tasks/add">Add</Link>
                 {Alldata?.map((task, i) => {
                     return <div key={i}>
                         <div>{task.title}</div>

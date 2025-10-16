@@ -13,3 +13,13 @@ div.login-title {
   justify-content: center;
 }
 
+div.addtask-outer {
+  margin: 10vh 25vw 10vh 25vw;
+  padding: 5vh 8vw;
+}
+
+div.addtask-title {
+  display: flex;
+  justify-content: center;
+}
+
