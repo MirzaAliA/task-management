@@ -23,3 +23,23 @@ div.addtask-title {
   justify-content: center;
 }
 
+div.taskpage-outer {
+  margin: 2vh 2vw 2vh 2vw;
+  padding: 5vh 8vw;
+}
+
+div.card-outer {
+  margin: 25vh 25vw 25vh 25vw;
+}
+
+div.card-body {
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 1px;
+}
+
+div.modal-delete-header {
+  display: flex;
+  flex-direction: column;
+}
+

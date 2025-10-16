@@ -43,7 +43,7 @@ export default function EditTaskPage() {
         <>
             <div className="addtask-outer">
                 <div className="addtask-title">
-                    <h2>Add Task</h2>
+                    <h2>Edit Task</h2>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div data-mdb-input-init className="form-outline mb-3">

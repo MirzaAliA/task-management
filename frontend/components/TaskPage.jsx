@@ -3,9 +3,11 @@ import {
     useMutation,
     useQueryClient
 } from '@tanstack/react-query'
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function TaskPage() {
+    const [selectedTask, setSelectedTask] = useState(0);
     const queryClient = useQueryClient();
 
     const deleteMutation = useMutation({
@@ -42,31 +44,107 @@ export default function TaskPage() {
         keepPreviousData: true,
     })
 
-    const Alldata = Array.isArray(data?.data) ? data.data : [];;
+    const Alldata = Array.isArray(data?.data) ? data.data : [];
+
+    function formatForDatetimeLocal(isoString) {
+        const date = new Date(isoString).toLocaleString("id-ID", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "Asia/Jakarta"
+        });
+        return date;
+    }
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading tasks</div>;
 
     return Alldata.length == 0 ? (
-        <div>
-            <Link to="/tasks/add">Add</Link>
-            <div>Tidak ada task</div>
+        <div className="taskpage-outer">
+            <Link type="button" className="btn btn-primary" to="/tasks/add">+</Link>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Judul Task</th>
+                        <th scope="col">Deskripsi</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Deadline</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tidak ada task</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     ) :
         (
-            <div>
-                <Link to="/tasks/add">Add</Link>
-                {Alldata?.map((task, i) => {
-                    return <div key={i}>
-                        <div>{task.title}</div>
-                        <div>{task.description}</div>
-                        <div>{task.status}</div>
-                        <div>{task.deadline}</div>
-                        <Link to={`/tasks/${task.task_id}`}>Detail Task</Link>
-                        <Link onClick={() => handleDelete(task.task_id)}>Delete</Link>
-                        <Link to={`/tasks/edit/${task.task_id}`}>Edit</Link>
+            <div className="taskpage-outer">
+                <Link type="button" className="btn btn-primary mb-3" to="/tasks/add">+ Add Data</Link>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Judul Task</th>
+                            <th scope="col">Deskripsi</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Deadline</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Alldata?.map((task, i) => {
+                            return <tr key={i}>
+                                <td>{i + 1}.</td>
+                                <td>{task.title}</td>
+                                <td>{task.description}</td>
+                                <td>{task.status}</td>
+                                <td>{formatForDatetimeLocal(task.deadline)}</td>
+                                <td>
+                                    <Link type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" to={`/tasks/${task.task_id}`} onClick={() => setSelectedTask(i)}>ⓘ</Link>
+                                    <Link type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" onClick={() => setSelectedTask(task.task_id)}>🗑</Link>
+                                    <Link type="button" className="btn btn-secondary" to={`/tasks/edit/${task.task_id}`}>✎</Link>
+                                </td>
+                            </tr>
+                        })}
+                    </tbody>
+                </table>
+                <div className="modal fade" id="confirmModal" tabIndex="-1">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-body">Yakin ingin menghapus data ini?</div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                <button className="btn btn-danger" onClick={() => handleDelete(selectedTask)}>Ya, Hapus</button>
+                            </div>
+                        </div>
                     </div>
-                })}
+                </div>
+
+                <div className="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header modal-delete-header">
+                                <h1 className="modal-title fs-5" id="detailModalLabel">{Alldata[selectedTask].title}</h1>
+                                <h5 className="modal-title fs-5" id="detailModalLabel">{Alldata[selectedTask].status}</h5>
+                            </div>
+                            <div className="modal-body">
+                                {Alldata[selectedTask].description}
+                            </div>
+                            <div className="modal-body">
+                                Deadline: {formatForDatetimeLocal(Alldata[selectedTask].deadline)}
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
 
