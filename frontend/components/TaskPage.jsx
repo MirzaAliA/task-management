@@ -64,6 +64,7 @@ export default function TaskPage() {
                         <div>{task.deadline}</div>
                         <Link to={`/tasks/${task.task_id}`}>Detail Task</Link>
                         <Link onClick={() => handleDelete(task.task_id)}>Delete</Link>
+                        <Link to={`/tasks/edit/${task.task_id}`}>Edit</Link>
                     </div>
                 })}
             </div>
