@@ -1,6 +1,5 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import useLogin from "../handler/loginHandler";
-import { useEffect } from "react";
 
 export default function LoginPage() {
 
@@ -14,13 +13,6 @@ export default function LoginPage() {
         }
         useMutation.mutate(data)
     }
-
-    // useEffect(() => {
-    //     fetch("http://localhost:3000/api/v1/auth/check", { credentials: "include" })
-    //         .then(res => res.json())
-    //         .then(console.log)
-    //         .catch(console.error);
-    // }, [])
 
     return (
         <>
