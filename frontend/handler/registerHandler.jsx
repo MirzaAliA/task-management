@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function useRegister() {
     const navigate = useNavigate();
     const query = useMutation({
-        mutationFn: async (data) => {
+        mutationFn: async (formData) => {
             const res = await fetch('http://localhost:3000/api/v1/auth/register', {
                 method: 'POST',
                 credentials: "include",
@@ -12,13 +12,13 @@ export default function useRegister() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name: data.name,
-                    username: data.username,
-                    password: data.password
+                    name: formData.name,
+                    username: formData.username,
+                    password: formData.password
                 })
             });
-            if (!res.ok) throw new Error('Register gagal')
-            return res.json();
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || "Terjadi kesalahan")
         }
     })
 

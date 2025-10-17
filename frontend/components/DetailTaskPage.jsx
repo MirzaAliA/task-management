@@ -1,21 +1,7 @@
-import {
-    useQuery,
-} from '@tanstack/react-query'
-import { Link, useParams } from 'react-router-dom';
+import useGetTask from '../handler/getHandler';
 
 export default function DetailTaskPage() {
-    const { task_id } = useParams();
-    const { data, isLoading, error } = useQuery({
-        queryKey: ['tasks'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:3000/api/v1/task/${task_id}`, {
-                credentials: "include",
-                method: "GET",
-            });
-            return res.json();
-        },
-        keepPreviousData: true,
-    })
+    const { data, isLoading, error } = useGetTask();
 
     const Alldata = data?.data
 

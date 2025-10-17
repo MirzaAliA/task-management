@@ -9,7 +9,7 @@ export const registerUser = async (req, res) => {
         const { name, username, password } = req.body;
 
         if (!username) {
-            return sendErrorResponse(res, { message: "Please input an Email" }, 401)
+            return sendErrorResponse(res, { message: "Please input an Username" }, 401)
         }
 
         if (!password) {

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function useLogin() {
     const navigate = useNavigate();
     const query = useMutation({
-        mutationFn: async (data) => {
+        mutationFn: async (formData) => {
             const res = await fetch('http://localhost:3000/api/v1/auth/login', {
                 method: 'POST',
                 credentials: "include",
@@ -12,13 +12,13 @@ export default function useLogin() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    username: data.username,
-                    password: data.password
+                    username: formData.username,
+                    password: formData.password
                 })
             });
-            if (!res.ok) throw new Error('Login gagal')
-            return res.json();
-        }
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || "Terjadi kesalahan")
+        },
     })
 
     useEffect(() => {

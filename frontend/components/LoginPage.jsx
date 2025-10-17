@@ -7,12 +7,13 @@ export default function LoginPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const data = {
+        const formData = {
             username: e.target[0].value,
             password: e.target[1].value
         }
-        useMutation.mutate(data)
+        useMutation.mutate(formData)
     }
+
 
     return (
         <>
@@ -30,6 +31,10 @@ export default function LoginPage() {
                         <label className="form-label">Password</label>
                         <input name="password" type="password" id="inputPassword" className="form-control" />
                     </div>
+
+                    {useMutation.isError && (
+                        <div className="mb-3" style={{ color: 'red' }}>{useMutation.error.message}!</div>
+                    )}
 
                     <button disabled={useMutation.isPending} type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-block mb-4">
                         {useMutation.isPending ? 'Logging in...' : 'Login'}

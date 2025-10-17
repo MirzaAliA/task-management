@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function useCreateTask() {
     const navigate = useNavigate();
     const query = useMutation({
-        mutationFn: async (data) => {
+        mutationFn: async (formData) => {
             const res = await fetch('http://localhost:3000/api/v1/task', {
                 method: 'POST',
                 credentials: "include",
@@ -12,14 +12,14 @@ export default function useCreateTask() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    title: data.title,
-                    description: data.description,
-                    status: data.status,
-                    deadline: data.deadline
+                    title: formData.title,
+                    description: formData.description,
+                    status: formData.status,
+                    deadline: formData.deadline
                 })
             });
-            if (!res.ok) throw new Error('Add Task gagal')
-            return res.json();
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || "Terjadi kesalahan")
         }
     })
 
@@ -28,6 +28,6 @@ export default function useCreateTask() {
             navigate("/tasks");
         }
     }, [query.isSuccess])
-    console.log(query)
+
     return query;
 }

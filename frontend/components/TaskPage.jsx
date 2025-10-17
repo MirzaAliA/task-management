@@ -1,10 +1,7 @@
-import {
-    useQuery,
-    useMutation,
-    useQueryClient
-} from '@tanstack/react-query'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useDeleteTask from '../handler/deleteHandler';
+import useGetAllTask from '../handler/getAllHandler';
 
 export default function TaskPage() {
     const [selectedTask, setSelectedTask] = useState(0);
@@ -12,40 +9,14 @@ export default function TaskPage() {
     const [sortOrder, setSortOrder] = useState("asc");
     const [sortBy, setSortBy] = useState(null);
     const [filterStatusBy, setFilterStatusBy] = useState("");
-    const queryClient = useQueryClient();
 
-    const deleteMutation = useMutation({
-        mutationFn: async (task_id) => {
-            const res = await fetch(`http://localhost:3000/api/v1/task/${task_id}`, {
-                method: 'DELETE',
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!res.ok) throw new Error('Delete gagal')
-            return res.json();
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tasks'] });
-        },
-    })
+    const deleteMutation = useDeleteTask();
 
     const handleDelete = (task_id) => {
         deleteMutation.mutate(task_id)
     }
 
-    const { data, isLoading, error } = useQuery({
-        queryKey: ['tasks'],
-        queryFn: async () => {
-            const res = await fetch('http://localhost:3000/api/v1/task', {
-                credentials: "include",
-                method: "GET"
-            });
-            return res.json();
-        },
-        keepPreviousData: true,
-    })
+    const { data, isLoading, error } = useGetAllTask();
 
     const Alldata = Array.isArray(data?.data) ? data.data : [];
 
@@ -100,8 +71,8 @@ export default function TaskPage() {
 
     return Alldata.length == 0 ? (
         <div className="taskpage-outer">
-            <Link type="button" className="btn btn-primary" to="/tasks/add">+</Link>
-            <table class="table">
+            <Link type="button" className="btn btn-primary" to="/tasks/add">+ Add Data</Link>
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">No.</th>
@@ -124,16 +95,16 @@ export default function TaskPage() {
             <div className="taskpage-outer">
                 <div className="taskpage-title">
                     <Link type="button" className="btn btn-primary mb-3" to="/tasks/add">+ Add Data</Link>
-                    <div class="dropdown">
+                    <div className="dropdown">
                         <label htmlFor="status" className="form-label mr-2">Status: </label>
-                        <button id="status" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="status" className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {filterStatusBy}
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><option class="dropdown-item" value="To Do" onClick={() => setFilterStatusBy("")}>Not Filtered</option></li>
-                            <li><option class="dropdown-item" value="To Do" onClick={() => setFilterStatusBy("To Do")}>To Do</option></li>
-                            <li><option class="dropdown-item" value="In Progress" onClick={() => setFilterStatusBy("In Progress")}>In Progress</option></li>
-                            <li><option class="dropdown-item" value="Done" onClick={() => setFilterStatusBy("Done")}>Done</option></li>
+                        <ul className="dropdown-menu">
+                            <li><option className="dropdown-item" value="To Do" onClick={() => setFilterStatusBy("")}>Not Filtered</option></li>
+                            <li><option className="dropdown-item" value="To Do" onClick={() => setFilterStatusBy("To Do")}>To Do</option></li>
+                            <li><option className="dropdown-item" value="In Progress" onClick={() => setFilterStatusBy("In Progress")}>In Progress</option></li>
+                            <li><option className="dropdown-item" value="Done" onClick={() => setFilterStatusBy("Done")}>Done</option></li>
                         </ul>
                     </div>
                 </div>
@@ -171,7 +142,7 @@ export default function TaskPage() {
                             <div className="modal-body">Yakin ingin menghapus data ini?</div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <button className="btn btn-danger" onClick={() => handleDelete(selectedTaskId)}>Ya, Hapus</button>
+                                <button className="btn btn-danger" data-bs-dismiss="modal" onClick={() => handleDelete(selectedTaskId)}>Ya, Hapus</button>
                             </div>
                         </div>
                     </div>

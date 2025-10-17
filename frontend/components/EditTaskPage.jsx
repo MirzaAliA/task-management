@@ -1,23 +1,12 @@
-import { Link } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query";
 import useEditTask from "../handler/putHandler";
-import { useParams } from "react-router-dom";
+import useGetTask from "../handler/getHandler";
 
 export default function EditTaskPage() {
     const editMutation = useEditTask();
+    const { data, isLoading, error } = useGetTask();
 
-    const { task_id } = useParams();
-    const { data, isLoading, error } = useQuery({
-        queryKey: ['tasks'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:3000/api/v1/task/${task_id}`, {
-                credentials: "include",
-                method: "GET",
-            });
-            return res.json();
-        },
-        keepPreviousData: true,
-    })
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error edit tasks</div>;
 
     const Alldata = data?.data;
 
@@ -29,14 +18,13 @@ export default function EditTaskPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const data = {
+        const formData = {
             title: e.target[0].value,
             description: e.target[1].value,
             status: e.target[2].value,
             deadline: e.target[3].value
         }
-        editMutation.mutate(data)
-        console.log(data);
+        editMutation.mutate(formData)
     }
 
     return (
@@ -69,8 +57,12 @@ export default function EditTaskPage() {
                         <input defaultValue={formatForDatetimeLocal(Alldata.deadline || new Date().toISOString())} name="date" type="datetime-local" id="inputDate" className="form-control" />
                     </div>
 
+                    {editMutation.isError && (
+                        <div className="mb-3" style={{ color: 'red' }}>{editMutation.error.message}!</div>
+                    )}
+
                     <button disabled={editMutation.isPending} type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-block mb-4">
-                        Edit
+                        {editMutation.isPending ? 'Process...' : 'Edit'}
                     </button>
                 </form>
             </div>

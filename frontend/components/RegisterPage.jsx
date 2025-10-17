@@ -7,12 +7,12 @@ export default function RegisterPage() {
     
         const handleSubmit = (e) => {
             e.preventDefault()
-            const data = {
+            const formData = {
                 name: e.target[0].value,
                 username: e.target[1].value,
                 password: e.target[2].value
             }
-            useMutation.mutate(data)
+            useMutation.mutate(formData)
         }
 
     return (
@@ -37,7 +37,13 @@ export default function RegisterPage() {
                         <input name="password" type="password" id="inputPassword" className="form-control" />
                     </div>
 
-                    <button disabled={useMutation.isPending} type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-block mb-4">Register</button>
+                    {useMutation.isError && (
+                        <div className="mb-3" style={{ color: 'red' }}>{useMutation.error.message}!</div>
+                    )}
+
+                    <button disabled={useMutation.isPending} type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-block mb-4">
+                        {useMutation.isPending ? 'Process...' : 'Register'}
+                    </button>
 
                     <div className="text-center">
                         <p>Sudah punya akun? <Link to="/login">Login</Link></p>
