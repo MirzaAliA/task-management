@@ -11,6 +11,7 @@ export default function TaskPage() {
     const [selectedTaskId, setSelectedTaskId] = useState(0);
     const [sortOrder, setSortOrder] = useState("asc");
     const [sortBy, setSortBy] = useState(null);
+    const [filterStatusBy, setFilterStatusBy] = useState("");
     const queryClient = useQueryClient();
 
     const deleteMutation = useMutation({
@@ -26,7 +27,6 @@ export default function TaskPage() {
             return res.json();
         },
         onSuccess: () => {
-            // Refetch data setelah delete sukses
             queryClient.invalidateQueries({ queryKey: ['tasks'] });
         },
     })
@@ -50,7 +50,7 @@ export default function TaskPage() {
     const Alldata = Array.isArray(data?.data) ? data.data : [];
 
     const handleSort = (key) => {
-        if(sortBy === key) {
+        if (sortBy === key) {
             setSortOrder(sortOrder === "asc" ? "desc" : "asc")
         } else {
             setSortBy(key);
@@ -59,22 +59,29 @@ export default function TaskPage() {
     }
 
     const sortedData = [...Alldata].sort((a, b) => {
-        if(!sortBy) return 0;
+        if (!sortBy) return 0;
 
         let varA = a[sortBy];
         let varB = b[sortBy];
 
-        if(sortBy === "deadline") {
+        if (sortBy === "deadline") {
             varA = new Date(varA);
             varB = new Date(varB);
         }
 
-        if(typeof varA === "string") {
+        if (typeof varA === "string") {
             return sortOrder === "asc" ? varA.localeCompare(varB) : varB.localeCompare(varA);
         }
 
         return sortOrder === "asc" ? varA - varB : varB - varA;
     })
+
+    const filteredDataByStatus = [...sortedData].filter(function (data) {
+        if(filterStatusBy === "") {
+            return data;
+        }
+        return data.status === filterStatusBy
+    });
 
     function formatForDatetimeLocal(isoString) {
         const date = new Date(isoString).toLocaleString("id-ID", {
@@ -115,20 +122,34 @@ export default function TaskPage() {
     ) :
         (
             <div className="taskpage-outer">
-                <Link type="button" className="btn btn-primary mb-3" to="/tasks/add">+ Add Data</Link>
+                <div className="taskpage-title">
+                    <Link type="button" className="btn btn-primary mb-3" to="/tasks/add">+ Add Data</Link>
+                    <div class="dropdown">
+                        <label htmlFor="status" className="form-label mr-2">Status: </label>
+                        <button id="status" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {filterStatusBy}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><option class="dropdown-item" value="To Do" onClick={() => setFilterStatusBy("")}>Not Filtered</option></li>
+                            <li><option class="dropdown-item" value="To Do" onClick={() => setFilterStatusBy("To Do")}>To Do</option></li>
+                            <li><option class="dropdown-item" value="In Progress" onClick={() => setFilterStatusBy("In Progress")}>In Progress</option></li>
+                            <li><option class="dropdown-item" value="Done" onClick={() => setFilterStatusBy("Done")}>Done</option></li>
+                        </ul>
+                    </div>
+                </div>
                 <table className="table">
                     <thead>
                         <tr>
                             <th scope="col">No.</th>
                             <th style={{ width: "10vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} scope="col" onClick={() => handleSort("title")}>Judul Task {sortBy === "title" ? (sortOrder === "asc" ? "▲" : "▼") : ""}</th>
-                            <th style={{ width: "40vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} scope="col" onClick={() => handleSort("description")}>Deskripsi {sortBy === "description" ? (sortOrder === "asc" ? "▲" : "▼") : ""}</th>
+                            <th style={{ width: "35vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} scope="col" onClick={() => handleSort("description")}>Deskripsi {sortBy === "description" ? (sortOrder === "asc" ? "▲" : "▼") : ""}</th>
                             <th scope="col" onClick={() => handleSort("status")}>Status {sortBy === "status" ? (sortOrder === "asc" ? "▲" : "▼") : ""}</th>
                             <th scope="col" onClick={() => handleSort("deadline")}>Deadline {sortBy === "deadline" ? (sortOrder === "asc" ? "▲" : "▼") : ""}</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedData?.map((task, i) => {
+                        {filteredDataByStatus?.map((task, i) => {
                             return <tr key={i}>
                                 <td>{i + 1}.</td>
                                 <td>{task.title}</td>

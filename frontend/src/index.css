@@ -43,3 +43,9 @@ div.modal-delete-header {
   flex-direction: column;
 }
 
+div.taskpage-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
