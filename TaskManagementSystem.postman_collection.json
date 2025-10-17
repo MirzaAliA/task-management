@@ -1,0 +1,420 @@
+{
+	"info": {
+		"_postman_id": "38faf38a-9785-4556-9dfa-8b9a0b63bd98",
+		"name": "TaskManagementSystem",
+		"description": "API Documentation for TaskManagementSystem backend services. Using Express.js and MySQL.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27808572",
+		"_collection_link": "https://saverent-note-app.postman.co/workspace/0879f5e7-02b0-4f8e-877b-4fe4744b521b/collection/27808572-38faf38a-9785-4556-9dfa-8b9a0b63bd98?action=share&source=collection_link&creator=27808572"
+	},
+	"item": [
+		{
+			"name": "Register an Account",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Your Name\",\r\n    \"username\": \"yourusername\",\r\n    \"password\": \"yourpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/auth/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				},
+				"description": "# REGISTER an Account\n\n## Method: POST\n\n## URL\n\n> [http://localhost:3000](https://rent-note.vercel.app) \n  \n\n## Request Example\n\n> POST [http://localhost:3000/api/v1/auth/register](http://localhost:3000/api/v1/task) \n  \n\n## Parameter(resource)\n\n1. task: check task data\n    \n\n## Response\n\n- Success Response(200)\n    \n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Success Insert Data\",\n    \"data\": {\n        \"identifiers\": [\n            {\n                \"user_id\": 6\n            }\n        ],\n        \"generatedMaps\": [\n            {\n                \"user_id\": 6\n            }\n        ],\n        \"raw\": {\n            \"fieldCount\": 0,\n            \"affectedRows\": 1,\n            \"insertId\": 6,\n            \"info\": \"\",\n            \"serverStatus\": 2,\n            \"warningStatus\": 0,\n            \"changedRows\": 0\n        }\n    }\n}\n\n ```\n\n- Error Response(500)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Internal Server Error\" || \"Something went wrong\"\n\n ```\n\n- Error Response(409 Conflict)\n    \n\n``` json\n{\n    \"success\": false,\n    \"message\": \"Username has already been taken\"\n}\n\n ```\n\n- Error Response(401 Unauthorized)\n    \n\n``` json\n{\n    \"success\": false,\n    \"message\": \"Please input an Username\"\n}\n\n ```\n\n``` json\n{\n    \"success\": false,\n    \"message\": \"Please input a Password\"\n}\n\n ```\n\n``` json\n{\n    \"success\": false,\n    \"message\": \"Please input a Name\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Login an Account",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"yourusername\",\r\n    \"password\": \"yourpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				},
+				"description": "# LOGIN an Account\n\n## Method: POST\n\n## URL\n\n> [http://localhost:3000](https://rent-note.vercel.app) \n  \n\n## Request Example\n\n> POST [http://localhost:3000/api/v1/auth/login](http://localhost:3000/api/v1/task) \n  \n\n## Parameter(resource)\n\n1. task: check task data\n    \n\n## Response\n\n- Success Response(200)\n    \n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Success Login\",\n    \"data\": {\n        \"token\": \"your token\",\n        \"name\": \"Your Name\"\n    }\n}\n\n ```\n\n- Error Response(500)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Internal Server Error\" || \"Something went wrong\"\n\n ```\n\n- Error Response(401 Unauthorized)\n    \n\n``` json\n{\n    \"success\": false,\n    \"message\": \"Email not found\"\n}\n\n ```\n\n``` json\n{\n    \"success\": false,\n    \"message\": \"Please input a Password\"\n}\n\n ```\n\n``` json\n{\n    \"success\": false,\n    \"message\": \"Password don't match\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Logout an Account",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"yourusername\",\r\n    \"password\": \"yourpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				},
+				"description": "# LOGOUT an Account\n\n## Method: POST\n\n## URL\n\n> [http://localhost:3000](https://rent-note.vercel.app) \n  \n\n## Request Example\n\n> POST [http://localhost:3000/api/v1/auth/logout](http://localhost:3000/api/v1/task) \n  \n\n## Parameter(resource)\n\n1. task: check task data\n    \n\n## Response\n\n- Success Response(200)\n    \n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Success Logout\",\n    \"data\": {\n        \"message\": \"Logout Success\"\n    }\n}\n\n ```\n\n- Error Response(500)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Internal Server Error\" || \"Something went wrong\"\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJuYW1lIjoiYWRtaW4xIiwiaWF0IjoxNzYwNjcxMDkxLCJleHAiOjE3NjA3NTc0OTF9.9I9jrXq-YdgYQw33BG54XIw6OBxJbGXdW_JyEWyNZWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/task",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"task"
+					]
+				},
+				"description": "# GET All Task\n\n## Method: GET\n\n## URL\n\n> [http://localhost:3000](https://rent-note.vercel.app) \n  \n\n## Headers:\n\n- Authorization: Bearer\n    \n- Content-Type: application/json\n    \n\n## Request Example\n\n> GET [http://localhost:3000/api/v1/task](http://localhost:3000/api/v1/task) \n  \n\n## Parameter(resource)\n\n1. task: check task data\n    \n\n## Response\n\n- Success Response(200)\n    \n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Success get data with user id: 2\",\n    \"data\": [\n        {\n            \"task_id\": 22,\n            \"title\": \"Mengecek Gudang\",\n            \"description\": \"Mengecek Gudang A\",\n            \"status\": \"In Progress\",\n            \"deadline\": \"2025-10-31T02:06:00.000Z\"\n        }\n    ]\n}\n\n ```\n\n- Error Response(500)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Internal Server Error\" || \"Something went wrong\"\n}\n\n ```\n\n- Error Response(404)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Data not found\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a Single Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJuYW1lIjoiYWRtaW4xIiwiaWF0IjoxNzYwNjcxMDkxLCJleHAiOjE3NjA3NTc0OTF9.9I9jrXq-YdgYQw33BG54XIw6OBxJbGXdW_JyEWyNZWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/task/22",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"task",
+						"22"
+					]
+				},
+				"description": "# GET All Task\n\n## Method: GET\n\n## URL\n\n> [http://localhost:3000](https://rent-note.vercel.app) \n  \n\n## Headers:\n\n- Authorization: Bearer\n    \n- Content-Type: application/json\n    \n\n## Request Example\n\n> GET [http://localhost:3000/api/v1/task/:id](http://localhost:3000/api/v1/task) \n  \n\n## Parameter(resource)\n\n1. task: check task data\n    \n\n## Response\n\n- Success Response(200)\n    \n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Success get data with user_id: 2 and task_id: 22\",\n    \"data\": {\n        \"task_id\": 22,\n        \"title\": \"Mengecek Gudang\",\n        \"description\": \"Mengecek Gudang\",\n        \"status\": \"In Progress\",\n        \"deadline\": \"2025-10-31T02:06:00.000Z\"\n    }\n}\n\n ```\n\n- Error Response(404)\n    \n\n``` json\n {\n  \"success\": false,\n  \"message\": \"User ID: 68cb94c83b8c62f2f5f88c36 not found\"\n}\n\n ```\n\n- Error Response(500)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Internal Server Error\" || \"Something went wrong\"\n}\n\n ```\n\n- Error Response(404)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Data not found\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Post a Single Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJuYW1lIjoiYWRtaW4xIiwiaWF0IjoxNzYwNjcxMDkxLCJleHAiOjE3NjA3NTc0OTF9.9I9jrXq-YdgYQw33BG54XIw6OBxJbGXdW_JyEWyNZWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Mengecek Gudang\",\n    \"description\": \"Stok barang C perlu di balancing dengan sistem\",\n    \"status\": \"To Do\",\n    \"deadline\": \"2025-10-15T20:00:00+07:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/task",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"task"
+					]
+				},
+				"description": "# ADD a Single Task\n\n## Method: POST\n\n## URL\n\n> [http://localhost:3000](https://rent-note.vercel.app) \n  \n\n## Headers:\n\n- Authorization: Bearer\n    \n- Content-Type: application/json\n    \n\n## Request Example\n\n> POST [http://localhost:3000/api/v1/task](http://localhost:3000/api/v1/task) \n  \n\n## Parameter(resource)\n\n1. task: check task data\n    \n\n## Response\n\n- Success Response(200)\n    \n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Success insert data with user_id: 2\",\n    \"data\": {\n        \"identifiers\": [\n            {\n                \"task_id\": 26\n            }\n        ],\n        \"generatedMaps\": [\n            {\n                \"task_id\": 26,\n                \"status\": \"To Do\"\n            }\n        ],\n        \"raw\": {\n            \"fieldCount\": 0,\n            \"affectedRows\": 1,\n            \"insertId\": 26,\n            \"info\": \"\",\n            \"serverStatus\": 2,\n            \"warningStatus\": 0,\n            \"changedRows\": 0\n        }\n    }\n}\n\n ```\n\n- Error Response(500)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Internal Server Error\" || \"Something went wrong\"\n}\n\n ```\n\n- Error Response(400)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Invalid ID format\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Single Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJuYW1lIjoiYWRtaW4xIiwiaWF0IjoxNzYwNjcxMDkxLCJleHAiOjE3NjA3NTc0OTF9.9I9jrXq-YdgYQw33BG54XIw6OBxJbGXdW_JyEWyNZWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Mengecek Gudang A\",\n    \"description\": \"Stok barang D perlu di balancing dengan sistem\",\n    \"status\": \"To Do\",\n    \"deadline\": \"2025-10-15T20:00:00+07:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/task/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"task",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				},
+				"description": "# EDIT a Single Task\n\n## Method: PUT\n\n## URL\n\n> [http://localhost:3000](https://rent-note.vercel.app) \n  \n\n## Headers:\n\n- Authorization: Bearer\n    \n- Content-Type: application/json\n    \n\n## Request Example\n\n> PUT [http://localhost:3000/api/v1/task](http://localhost:3000/api/v1/task)/:id \n  \n\n## Parameter(resource)\n\n1. task: check task data\n    \n\n## Response\n\n- Success Response(200)\n    \n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Success update data with user_id: 2 and task_id: 22\",\n    \"data\": {\n        \"generatedMaps\": [],\n        \"raw\": [],\n        \"affected\": 1\n    }\n}\n\n ```\n\n- Error Response(500)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Internal Server Error\" || \"Something went wrong\"\n}\n\n ```\n\nError Response(400)\n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Invalid ID format\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Single Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJuYW1lIjoiYWRtaW4xIiwiaWF0IjoxNzYwNjcxMDkxLCJleHAiOjE3NjA3NTc0OTF9.9I9jrXq-YdgYQw33BG54XIw6OBxJbGXdW_JyEWyNZWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/task/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"task",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				},
+				"description": "# DELETE a Single Task\n\n## Method: DELETE\n\n## URL\n\n> [http://localhost:3000](https://rent-note.vercel.app) \n  \n\n## Headers:\n\n- Authorization: Bearer\n    \n- Content-Type: application/json\n    \n\n## Request Example\n\n> DELETE [http://localhost:3000/api/v1/task](http://localhost:3000/api/v1/task)/:id \n  \n\n## Parameter(resource)\n\n1. task: check task data\n    \n\n## Response\n\n- Success Response(200)\n    \n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Success delete data with user_id: 2 and task_id: 22\",\n    \"data\": {\n        \"raw\": [],\n        \"affected\": 1\n    }\n}\n\n ```\n\n- Error Response(500)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Internal Server Error\" || \"Something went wrong\"\n}\n\n ```\n\n- Error Response(400)\n    \n\n``` json\n{\n  \"success\": false,\n  \"message\": \"Invalid ID format\"\n}\n\n ```"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000"
+		}
+	]
+}
