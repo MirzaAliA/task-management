@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 export default function TaskPage() {
     const [selectedTask, setSelectedTask] = useState(0);
     const [selectedTaskId, setSelectedTaskId] = useState(0);
+    const [sortOrder, setSortOrder] = useState("asc");
+    const [sortBy, setSortBy] = useState(null);
     const queryClient = useQueryClient();
 
     const deleteMutation = useMutation({
@@ -47,7 +49,32 @@ export default function TaskPage() {
 
     const Alldata = Array.isArray(data?.data) ? data.data : [];
 
-    
+    const handleSort = (key) => {
+        if(sortBy === key) {
+            setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+        } else {
+            setSortBy(key);
+            setSortOrder("asc");
+        }
+    }
+
+    const sortedData = [...Alldata].sort((a, b) => {
+        if(!sortBy) return 0;
+
+        let varA = a[sortBy];
+        let varB = b[sortBy];
+
+        if(sortBy === "deadline") {
+            varA = new Date(varA);
+            varB = new Date(varB);
+        }
+
+        if(typeof varA === "string") {
+            return sortOrder === "asc" ? varA.localeCompare(varB) : varB.localeCompare(varA);
+        }
+
+        return sortOrder === "asc" ? varA - varB : varB - varA;
+    })
 
     function formatForDatetimeLocal(isoString) {
         const date = new Date(isoString).toLocaleString("id-ID", {
@@ -93,15 +120,15 @@ export default function TaskPage() {
                     <thead>
                         <tr>
                             <th scope="col">No.</th>
-                            <th scope="col">Judul Task</th>
-                            <th scope="col">Deskripsi</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Deadline</th>
+                            <th style={{ width: "10vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} scope="col" onClick={() => handleSort("title")}>Judul Task {sortBy === "title" ? (sortOrder === "asc" ? "▲" : "▼") : ""}</th>
+                            <th style={{ width: "40vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} scope="col" onClick={() => handleSort("description")}>Deskripsi {sortBy === "description" ? (sortOrder === "asc" ? "▲" : "▼") : ""}</th>
+                            <th scope="col" onClick={() => handleSort("status")}>Status {sortBy === "status" ? (sortOrder === "asc" ? "▲" : "▼") : ""}</th>
+                            <th scope="col" onClick={() => handleSort("deadline")}>Deadline {sortBy === "deadline" ? (sortOrder === "asc" ? "▲" : "▼") : ""}</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {Alldata?.map((task, i) => {
+                        {sortedData?.map((task, i) => {
                             return <tr key={i}>
                                 <td>{i + 1}.</td>
                                 <td>{task.title}</td>
