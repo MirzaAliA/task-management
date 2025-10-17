@@ -23,7 +23,7 @@ export default function useLogin() {
 
     useEffect(() => {
         if (query.isSuccess) {
-            navigate("/tasks");
+            navigate("/");
         }
     }, [query.isSuccess])
 

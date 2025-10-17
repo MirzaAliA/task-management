@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 export default function TaskPage() {
     const [selectedTask, setSelectedTask] = useState(0);
+    const [selectedTaskId, setSelectedTaskId] = useState(0);
     const queryClient = useQueryClient();
 
     const deleteMutation = useMutation({
@@ -46,6 +47,8 @@ export default function TaskPage() {
 
     const Alldata = Array.isArray(data?.data) ? data.data : [];
 
+    
+
     function formatForDatetimeLocal(isoString) {
         const date = new Date(isoString).toLocaleString("id-ID", {
             day: "2-digit",
@@ -67,7 +70,7 @@ export default function TaskPage() {
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">No.</th>
                         <th scope="col">Judul Task</th>
                         <th scope="col">Deskripsi</th>
                         <th scope="col">Status</th>
@@ -86,10 +89,10 @@ export default function TaskPage() {
         (
             <div className="taskpage-outer">
                 <Link type="button" className="btn btn-primary mb-3" to="/tasks/add">+ Add Data</Link>
-                <table class="table">
+                <table className="table">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col">No.</th>
                             <th scope="col">Judul Task</th>
                             <th scope="col">Deskripsi</th>
                             <th scope="col">Status</th>
@@ -106,27 +109,27 @@ export default function TaskPage() {
                                 <td>{task.status}</td>
                                 <td>{formatForDatetimeLocal(task.deadline)}</td>
                                 <td>
-                                    <Link type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" to={`/tasks/${task.task_id}`} onClick={() => setSelectedTask(i)}>ⓘ</Link>
-                                    <Link type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" onClick={() => setSelectedTask(task.task_id)}>🗑</Link>
+                                    <Link type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" onClick={() => setSelectedTask(i)}>ⓘ</Link>
+                                    <Link type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" onClick={() => setSelectedTaskId(task.task_id)}>🗑</Link>
                                     <Link type="button" className="btn btn-secondary" to={`/tasks/edit/${task.task_id}`}>✎</Link>
                                 </td>
                             </tr>
                         })}
                     </tbody>
                 </table>
-                <div className="modal fade" id="confirmModal" tabIndex="-1">
+                <div className="modal fade" id="confirmModal" tabIndex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-body">Yakin ingin menghapus data ini?</div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <button className="btn btn-danger" onClick={() => handleDelete(selectedTask)}>Ya, Hapus</button>
+                                <button className="btn btn-danger" onClick={() => handleDelete(selectedTaskId)}>Ya, Hapus</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                <div className="modal fade" id="detailModal" tabIndex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header modal-delete-header">
