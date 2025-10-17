@@ -88,15 +88,25 @@ export const loginUser = async (req, res) => {
         }, process.env.SECRET, { expiresIn: 60 * 60 * 24 });
 
         res.cookie("token", token, {
-            httpOnly: true,  
-            secure: false,   
-            sameSite: "lax",  
-            maxAge: 24 * 60 * 60 * 1000 
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            maxAge: 24 * 60 * 60 * 1000
         });
 
         sendOkResponse(res, { token, name: findUser.name }, "Success Login");
     }
     catch (err) {
+        sendErrorResponse(res, err, 500)
+    }
+}
+
+export const logoutUser = async (req, res) => {
+    try {
+        res.clearCookie("token");
+        sendOkResponse(res, { message: "Logout berhasil" }, "Success Logout");
+    }
+    catch {
         sendErrorResponse(res, err, 500)
     }
 }

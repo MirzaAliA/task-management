@@ -3,10 +3,12 @@ const routerAuth = express.Router();
 
 import {
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
 } from "../controllers/AuthController.js"
 
 routerAuth.post('/register', registerUser);
 routerAuth.post('/login', loginUser);
+routerAuth.post('/logout', logoutUser);
 
 export default routerAuth;

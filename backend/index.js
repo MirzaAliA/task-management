@@ -5,6 +5,7 @@ import { connectDB } from "./server/config/db.js"
 import dotenv from "dotenv"
 import routerAuth from "./server/routes/AuthRoute.js"
 import routerTask from "./server/routes/TaskRoute.js"
+import routerCheck from "./server/routes/CheckRoute.js"
 import authMiddleware from "./server/middlewares/authMiddleware.js"
 import cors from "cors";
 
@@ -27,6 +28,7 @@ app.use(cors({
 app.get('/', (req, res) => { res.json("Hello Nexa!") });
 app.use('/api/v1/auth', routerAuth);
 app.use('/api/v1/task', authMiddleware, routerTask);
+app.use('/api/v1/check', authMiddleware, routerCheck);
 // app.get("/api/v1/auth/check", (req, res) => {
 //     const token = req.cookies.token;
 //     if (!token) return res.status(401).json({ message: "Cookie missing" });
