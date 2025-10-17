@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 export default function useLogin() {
     const navigate = useNavigate();
     const query = useMutation({
@@ -25,7 +26,7 @@ export default function useLogin() {
         if (query.isSuccess) {
             navigate("/");
         }
-    }, [query.isSuccess])
+    }, [navigate, query.isSuccess])
 
     return query;
 }

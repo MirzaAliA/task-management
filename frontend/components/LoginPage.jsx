@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import useLogin from "../handler/loginHandler";
+import useLogin from "../handler/loginHandler.jsx";
 
 export default function LoginPage() {
 

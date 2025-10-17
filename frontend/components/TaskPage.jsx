@@ -136,7 +136,7 @@ export default function TaskPage() {
                         })}
                     </tbody>
                 </table>
-                <div className="modal fade" id="confirmModal" tabIndex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div className="modal fade" id="confirmModal" tabIndex="-1" aria-labelledby="confirmModalLabel">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-body">Yakin ingin menghapus data ini?</div>
@@ -148,7 +148,7 @@ export default function TaskPage() {
                     </div>
                 </div>
 
-                <div className="modal fade" id="detailModal" tabIndex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                <div className="modal fade" id="detailModal" tabIndex="-1" aria-labelledby="detailModalLabel">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header modal-delete-header">

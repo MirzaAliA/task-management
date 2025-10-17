@@ -26,7 +26,7 @@ export default function useRegister() {
         if (query.isSuccess) {
             navigate("/login");
         }
-    }, [query.isSuccess])
+    }, [navigate, query.isSuccess])
 
     return query;
 }

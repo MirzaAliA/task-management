@@ -27,7 +27,7 @@ export default function useCreateTask() {
         if (query.isSuccess) {
             navigate("/tasks");
         }
-    }, [query.isSuccess])
+    }, [navigate, query.isSuccess])
 
     return query;
 }

@@ -28,6 +28,6 @@ export default function useEditTask() {
         if (query.isSuccess) {
             navigate("/tasks");
         }
-    }, [query.isSuccess])
+    }, [navigate, query.isSuccess])
     return query;
 }
