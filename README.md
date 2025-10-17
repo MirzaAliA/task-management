@@ -37,14 +37,13 @@ npm run dev
 4. Buka Frontend di browser
 http://localhost:5173
 
-## Tech Stack
- - FRONTEND
+## Tech Stack Frontend
  - React + Vite
  - React Router DOM
  - Bootstrap
  - TanStack Query
 
- - BACKEND
+## Tech Stack Backend
  - Express.js
  - MySQL
  - TypeORM
