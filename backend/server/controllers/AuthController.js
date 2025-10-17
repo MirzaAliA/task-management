@@ -104,7 +104,7 @@ export const loginUser = async (req, res) => {
 export const logoutUser = async (req, res) => {
     try {
         res.clearCookie("token");
-        sendOkResponse(res, { message: "Logout berhasil" }, "Success Logout");
+        sendOkResponse(res, { message: "Logout Success" }, "Success Logout");
     }
     catch {
         sendErrorResponse(res, err, 500)

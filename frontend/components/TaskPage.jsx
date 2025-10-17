@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useDeleteTask from '../handler/deleteHandler';
 import useGetAllTask from '../handler/getAllHandler';
+import LogoutButton from './LogoutButton';
 
 export default function TaskPage() {
     const [selectedTask, setSelectedTask] = useState(0);
@@ -127,7 +128,7 @@ export default function TaskPage() {
                                 <td>{task.description}</td>
                                 <td>{task.status}</td>
                                 <td>{formatForDatetimeLocal(task.deadline)}</td>
-                                <td>
+                                <td className="btn-action">
                                     <Link type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal" onClick={() => setSelectedTask(i)}>ⓘ</Link>
                                     <Link type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" onClick={() => setSelectedTaskId(task.task_id)}>🗑</Link>
                                     <Link type="button" className="btn btn-secondary" to={`/tasks/edit/${task.task_id}`}>✎</Link>

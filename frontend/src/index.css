@@ -49,3 +49,27 @@ div.taskpage-title {
   justify-content: space-between;
 }
 
+div.logout-outer {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  margin-top: 2vh;
+  margin-right: 1vw;
+}
+
+div.homepage-outer {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-task {
+  width: 10%;
+}
+
+td.btn-action {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3vw;
+  flex-wrap: wrap;
+}
+
